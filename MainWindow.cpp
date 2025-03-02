@@ -3,12 +3,15 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+      , ui(new Ui::MainWindow) {
     ui->setupUi(this);
+    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
-MainWindow::~MainWindow()
-{
+void MainWindow::bindActions() const {
+    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+}
+
+MainWindow::~MainWindow() {
     delete ui;
 }
