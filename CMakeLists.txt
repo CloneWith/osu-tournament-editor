@@ -16,9 +16,9 @@ set(TS_FILES osu-tournament-editor_zh_CN.ts)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        MainWindow.cpp
+        MainWindow.h
+        MainWindow.ui
         ${TS_FILES}
 )
 
