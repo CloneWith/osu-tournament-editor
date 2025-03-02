@@ -5,23 +5,29 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace Ui {
+namespace Ui
+{
     class MainWindow;
 }
 
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget* parent = nullptr);
 
     ~MainWindow() override;
 
-    void bindActions() const;
+private slots:
+    static void about();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
+
+    void bindActions() const;
+    void bindShortcuts() const;
 };
 #endif // MAINWINDOW_H

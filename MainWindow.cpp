@@ -1,17 +1,35 @@
 #include "MainWindow.h"
+
 #include "./ui_MainWindow.h"
+#include "ProjectAboutDialog.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-      , ui(new Ui::MainWindow) {
+      , ui(new Ui::MainWindow)
+{
     ui->setupUi(this);
-    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    bindActions();
 }
 
-void MainWindow::bindActions() const {
-    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+void MainWindow::about()
+{
+    ProjectAboutDialog aboutDialog;
+    aboutDialog.exec();
 }
 
-MainWindow::~MainWindow() {
+void MainWindow::bindActions() const
+{
+    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(ui->actionAboutProject, &QAction::triggered, qApp, &MainWindow::about);
+    connect(ui->actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+}
+
+void MainWindow::bindShortcuts() const
+{
+    ui->actionOpen->setShortcut(QKeySequence::Open);
+}
+
+MainWindow::~MainWindow()
+{
     delete ui;
 }
