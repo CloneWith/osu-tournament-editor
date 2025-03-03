@@ -23,6 +23,25 @@ set(PROJECT_SOURCES
         ProjectAboutDialog.cpp
         ProjectAboutDialog.h
         ProjectAboutDialog.ui
+        Models/EditorTab.cpp
+        Models/EditorTab.h
+        Models/LadderInfo.h
+        Models/RulesetInfo.h
+        Models/TournamentMatch.cpp
+        Models/TournamentMatch.h
+        Models/TournamentRound.h
+        Models/TournamentTeam.cpp
+        Models/TournamentTeam.h
+        Models/TournamentProgression.cpp
+        Models/TournamentProgression.h
+        Models/TournamentUser.h
+        Models/RoundBeatmap.h
+        Models/TeamColour.h
+        Models/BeatmapChoice.h
+        Models/ConditionalTournamentMatch.h
+        Models/SeedingResult.h
+        Models/TournamentBeatmap.h
+        Models/SeedingBeatmap.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
