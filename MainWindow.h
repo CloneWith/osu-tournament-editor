@@ -22,7 +22,8 @@ public:
     ~MainWindow() override;
 
 private slots:
-    static void about();
+    void about();
+    void open();
 
 private:
     Ui::MainWindow* ui;
@@ -30,4 +31,6 @@ private:
     void bindActions() const;
     void bindShortcuts() const;
 };
+
+
 #endif // MAINWINDOW_H
