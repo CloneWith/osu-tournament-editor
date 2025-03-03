@@ -22,11 +22,16 @@ public:
     ~MainWindow() override;
 
 private slots:
+    void createNew();
+    void help();
     void about();
     void open();
+    void openProject();
+    void showHome();
 
 private:
     Ui::MainWindow* ui;
+    QTabWidget* tabWidget;
 
     void bindActions() const;
     void bindShortcuts() const;

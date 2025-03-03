@@ -4,8 +4,6 @@
 
 #include "TournamentTeam.h"
 
-#include <qmargins.h>
-
 QString TournamentTeam::ToString()
 {
     return FullName != "" ? FullName : Acronym;
