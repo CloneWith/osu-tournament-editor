@@ -42,6 +42,9 @@ set(PROJECT_SOURCES
         Models/SeedingResult.h
         Models/TournamentBeatmap.h
         Models/SeedingBeatmap.h
+        Tabs/WelcomeTab.cpp
+        Tabs/WelcomeTab.h
+        Tabs/WelcomeTab.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
