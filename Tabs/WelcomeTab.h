@@ -5,8 +5,10 @@
 #ifndef WELCOMETAB_H
 #define WELCOMETAB_H
 
+#include <QSettings>
 #include <QWidget>
 
+#include "../Common.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -26,11 +28,14 @@ public:
 
     ~WelcomeTab() override;
 
+    QSettings Settings = QSettings(Common::DATA_NAME, QSettings::IniFormat);
+
 private slots:
     void callNew();
     void callOpen();
     void callOpenProject();
     void callHelp();
+    void changeHomeStartupDisplay(bool showTab);
 
 private:
     Ui::WelcomeTab *ui;

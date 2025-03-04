@@ -48,6 +48,7 @@ set(PROJECT_SOURCES
         Tabs/WelcomeTab.cpp
         Tabs/WelcomeTab.h
         Tabs/WelcomeTab.ui
+        Common.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
+
+#include "Common.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -21,11 +24,13 @@ public:
 
     ~MainWindow() override;
 
+    QSettings Settings = QSettings(Common::DATA_NAME, QSettings::IniFormat);
+
 private slots:
     void createNew();
     void help();
     void about();
-    void open();
+    void openFile();
     void openProject();
     void showHome();
 

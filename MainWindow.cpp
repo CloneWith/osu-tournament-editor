@@ -4,7 +4,6 @@
 #include "ProjectAboutDialog.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include "Tabs/WelcomeTab.h"
 
@@ -24,8 +23,8 @@ MainWindow::MainWindow(QWidget* parent)
     tabWidget->setTabsClosable(true);
     setCentralWidget(tabWidget);
 
-    // TODO: Read value of never show again checkbox and determine whether to show this tab
-    showHome();
+    if (Settings.value("show_startup_home_tab").toBool())
+        showHome();
 }
 
 void MainWindow::help()
@@ -60,7 +59,7 @@ void MainWindow::openProject()
     // TODO: Tab update and JSON deserialization
 }
 
-void MainWindow::open()
+void MainWindow::openFile()
 {
     QFileDialog fileDialog(this);
     QStringList files;
@@ -83,7 +82,7 @@ void MainWindow::showHome()
 {
     auto* homeTab = new WelcomeTab();
     connect(homeTab, SIGNAL(signalNew()), this, SLOT(createNew()));
-    connect(homeTab, SIGNAL(signalOpen()), this, SLOT(open()));
+    connect(homeTab, SIGNAL(signalOpen()), this, SLOT(openFile()));
     connect(homeTab, SIGNAL(signalOpenProject()), this, SLOT(openProject()));
     connect(homeTab, SIGNAL(signalHelp()), this, SLOT(help()));
 
@@ -102,7 +101,7 @@ void MainWindow::closeTab(int index)
 void MainWindow::bindActions() const
 {
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(createNew()));
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionOpenProject, SIGNAL(triggered()), this, SLOT(openProject()));
     connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(help()));
     connect(ui->actionAboutProject, SIGNAL(triggered()), this, SLOT(about()));
