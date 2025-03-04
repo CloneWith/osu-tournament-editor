@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QFile>
 #include <QMainWindow>
 #include <QSettings>
 
@@ -36,10 +37,12 @@ private slots:
 
     static void showTranslationGenerator();
 
+    void closeTab();
     void closeTab(int index);
 
 private:
     Ui::MainWindow* ui;
+    QList<QFile> openedFiles;
     QTabWidget* tabWidget = new QTabWidget();
 
     void bindActions() const;

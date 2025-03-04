@@ -17,7 +17,7 @@ WelcomeTab::WelcomeTab(QWidget *parent) : QWidget(parent), ui(new Ui::WelcomeTab
     connect(ui->commandButton3, &QCommandLinkButton::clicked, this, &WelcomeTab::callOpen);
     connect(ui->commandButton4, &QCommandLinkButton::clicked, this, &WelcomeTab::callHelp);
 
-    connect(ui->dismissCheckBox, SIGNAL(toggled(bool)), this, SLOT(changeHomeStartupDisplay(!bool)));
+    connect(ui->dismissCheckBox, SIGNAL(toggled(bool)), this, SLOT(changeHomeStartupDisplay(bool)));
 }
 
 WelcomeTab::~WelcomeTab()
@@ -25,9 +25,9 @@ WelcomeTab::~WelcomeTab()
     delete ui;
 }
 
-void WelcomeTab::changeHomeStartupDisplay(bool showTab)
+void WelcomeTab::changeHomeStartupDisplay(bool hideTab)
 {
-    Settings.setValue("show_startup_home_tab", showTab);
+    Settings.setValue("hide_startup_home_tab", hideTab);
 }
 
 void WelcomeTab::callNew()

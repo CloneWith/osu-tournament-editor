@@ -35,7 +35,7 @@ private slots:
     void callOpen();
     void callOpenProject();
     void callHelp();
-    void changeHomeStartupDisplay(bool showTab);
+    void changeHomeStartupDisplay(bool hideTab);
 
 private:
     Ui::WelcomeTab *ui;

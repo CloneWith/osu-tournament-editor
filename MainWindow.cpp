@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget* parent)
     tabWidget->setTabsClosable(true);
     setCentralWidget(tabWidget);
 
-    if (Settings.value("show_startup_home_tab").toBool())
+    if (Settings.value("hide_startup_home_tab").toBool())
         showHome();
 }
 
@@ -78,6 +78,9 @@ void MainWindow::openFile()
     // TODO: Tab update and JSON deserialization
 }
 
+/// <summary>
+/// Shows the "Get Started" welcome tab.
+/// </summary>
 void MainWindow::showHome()
 {
     auto* homeTab = new WelcomeTab();
@@ -86,10 +89,21 @@ void MainWindow::showHome()
     connect(homeTab, SIGNAL(signalOpenProject()), this, SLOT(openProject()));
     connect(homeTab, SIGNAL(signalHelp()), this, SLOT(help()));
 
-    connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
     tabWidget->addTab(homeTab, QIcon::fromTheme(QIcon::ThemeIcon::GoHome), "Welcome");
 }
 
+/// <summary>
+/// Closes the currently selected tab in the tab widget.
+/// </summary>
+void MainWindow::closeTab()
+{
+    closeTab(tabWidget->currentIndex());
+}
+
+/// <summary>
+/// Closes the tab with specific index in the tab widget.
+/// </summary>
+/// <param name="index">the index of the tab</param>
 void MainWindow::closeTab(int index)
 {
     // Get widget pointer first -> Then remove tab (otherwise we cannot access the pointer)
@@ -103,10 +117,14 @@ void MainWindow::bindActions() const
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(createNew()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionOpenProject, SIGNAL(triggered()), this, SLOT(openProject()));
+    connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeTab()));
+    connect(ui->actionTranslationGenerator, SIGNAL(triggered()), this, SLOT(showTranslationGenerator()));
     connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(help()));
     connect(ui->actionAboutProject, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+    connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 }
 
 void MainWindow::bindShortcuts() const
