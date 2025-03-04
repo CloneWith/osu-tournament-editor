@@ -4,21 +4,25 @@
 
 #ifndef ROUNDBEATMAP_H
 #define ROUNDBEATMAP_H
+
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
+
 #include <qstring.h>
 
-#include "TournamentBeatmap.h"
+#include "../libs/qserializer.h"
 
+class RoundBeatmap : public QSerializer
+{
+    Q_GADGET
+    QS_SERIALIZABLE
 
-class RoundBeatmap {
 public:
-    int ID = 0;
-    QString ModIndex = "";
-    QString Mods = "";
-
-    // JSON Property: BeatmapInfo
-    TournamentBeatmap Beatmap;
+    QS_FIELD(int, ID)
+    QS_FIELD(QString, ModIndex)
+    QS_FIELD(QString, Mods)
 };
-
 
 
 #endif //ROUNDBEATMAP_H

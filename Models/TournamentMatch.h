@@ -4,56 +4,67 @@
 
 #ifndef TOURNAMENTMATCH_H
 #define TOURNAMENTMATCH_H
+
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
+
 #include <qlist.h>
 #include <qpoint.h>
 #include <qstring.h>
 
 #include "BeatmapChoice.h"
-#include "ConditionalTournamentMatch.h"
 #include "TeamColour.h"
 #include "TournamentRound.h"
 #include "TournamentTeam.h"
 
 
-class TournamentMatch
+class TournamentMatch : public QSerializer
 {
-public:
-    int ID = -1;
+    Q_GADGET
+    QS_SERIALIZABLE
 
-    [[nodiscard]] QList<QString> Acronyms() const;
+    QS_FIELD(int, ID)
 
-    TournamentTeam Team1 = TournamentTeam();
-    QString Team1Acronym;
-    int Team1Score = 0;
+    QS_OBJECT(TournamentTeam, Team1)
+    QS_FIELD(QString, Team1Acronym)
+    QS_FIELD(int, Team1Score)
 
-    TournamentTeam Team2 = TournamentTeam();
-    QString Team2Acronym;
-    int Team2Score = 0;
+    QS_OBJECT(TournamentTeam, Team2)
+    QS_FIELD(QString, Team2Acronym)
+    QS_FIELD(int, Team2Score)
 
-    bool Completed = false;
-    bool Losers = false;
+    QS_FIELD(bool, Completed)
+    QS_FIELD(bool, Losers)
 
-    QSet<BeatmapChoice> PicksBans = {};
+    QS_COLLECTION_OBJECTS(QList, BeatmapChoice, PicksBans)
 
-    TournamentRound Round = TournamentRound();
+    QS_OBJECT(TournamentRound, Round)
 
     /// <summary>
     /// Should not be set directly. Use LadderInfo.CurrentMatch.Value = this instead.
     /// </summary>
-    bool Current = false;
+    QS_FIELD(bool, Current)
 
-    QDateTime Date = QDateTime::currentDateTime();
+    QS_FIELD(QDateTime, Date)
 
-    QList<ConditionalTournamentMatch> ConditionalMatches = {};
+    QS_FIELD(QPoint, Position)
 
-    QPoint Position;
+    QS_FIELD(TeamColour, Winner)
+    QS_FIELD(TeamColour, Loser)
+    QS_FIELD(int, PointsToWin)
 
-    [[nodiscard]] TeamColour Winner() const;
-    [[nodiscard]] TeamColour Loser() const;
+    [[nodiscard]] TeamColour GetWinner() const;
+    [[nodiscard]] TeamColour GetLoser() const;
 
-    [[nodiscard]] int PointsToWin() const;
+    [[nodiscard]] int GetPointsToWin() const;
 
-    TournamentMatch() = default;
+public:
+    TournamentMatch()
+    {
+        ID = -1;
+        Date = QDateTime::currentDateTime();
+    }
     TournamentMatch(TournamentTeam team1, TournamentTeam team2);
 };
 

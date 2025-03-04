@@ -4,43 +4,53 @@
 
 #ifndef TOURNAMENTTEAM_H
 #define TOURNAMENTTEAM_H
+
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
+
 #include <qlist.h>
 #include <qstring.h>
 
 #include "SeedingResult.h"
 #include "TournamentUser.h"
+#include "../libs/qserializer.h"
 
-
-class TournamentTeam
+class TournamentTeam : public QSerializer
 {
+    Q_GADGET
+    QS_SERIALIZABLE
+
 public:
     TournamentTeam() = default;
 
     /// <summary>
     /// The name of this team.
     /// </summary>
-    QString FullName = "";
+    QS_FIELD(QString, FullName)
 
     /// <summary>
     /// Name of the file containing the flag.
     /// </summary>
-    QString FlagName = "";
+    QS_FIELD(QString, FlagName)
 
     /// <summary>
     /// Short acronym which appears in the group boxes post-selection.
     /// </summary>
-    QString Acronym = "";
+    QS_FIELD(QString, Acronym)
 
-    QList<SeedingResult> SeedingResults = {};
+    QS_COLLECTION_OBJECTS(QList, SeedingResult, SeedingResults)
 
-    [[nodiscard]] double AverageRank() const;
+    QS_FIELD(double, AverageRank)
 
-    QString Seed = "";
+    [[nodiscard]] double GetAverageRank() const;
+
+    QS_FIELD(QString, Seed)
 
     // Value Range: 0 - 256
-    int LastYearPlacing = 0;
+    QS_FIELD(int, LastYearPlacing)
 
-    QList<TournamentUser> Players = {};
+    QS_COLLECTION_OBJECTS(QList, TournamentUser, Players)
 
     QString ToString();
 };

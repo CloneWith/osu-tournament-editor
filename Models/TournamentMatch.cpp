@@ -6,7 +6,7 @@
 
 #include <utility>
 
-int TournamentMatch::PointsToWin() const
+int TournamentMatch::GetPointsToWin() const
 {
     return Round.BestOf / 2 + 1;
 }
@@ -17,24 +17,14 @@ TournamentMatch::TournamentMatch(TournamentTeam team1, TournamentTeam team2)
     Team2 = std::move(team2);
 }
 
-QList<QString> TournamentMatch::Acronyms() const
+TeamColour TournamentMatch::GetWinner() const
 {
-    QList<QString> acronyms;
-
-    if (Team1Acronym != "") acronyms.append(Team1Acronym);
-    if (Team2Acronym != "") acronyms.append(Team2Acronym);
-
-    return acronyms;
-}
-
-TeamColour TournamentMatch::Winner() const
-{
-    if (!Completed) return Neutral;
+    if (!Completed) return TeamColour::None;
     return Team1Score > Team2Score ? Red : Blue;
 }
 
-TeamColour TournamentMatch::Loser() const
+TeamColour TournamentMatch::GetLoser() const
 {
-    if (!Completed) return Neutral;
+    if (!Completed) return TeamColour::None;
     return Team1Score < Team2Score ? Red : Blue;
 }

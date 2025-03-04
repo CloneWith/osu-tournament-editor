@@ -9,7 +9,7 @@ QString TournamentTeam::ToString()
     return FullName != "" ? FullName : Acronym;
 }
 
-double TournamentTeam::AverageRank() const
+double TournamentTeam::GetAverageRank() const
 {
     QList<int> ranks = {};
     double sum = 0;

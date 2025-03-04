@@ -4,6 +4,11 @@
 
 #ifndef LADDERINFO_H
 #define LADDERINFO_H
+
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
+
 #include <qlist.h>
 
 #include "RulesetInfo.h"
@@ -11,32 +16,43 @@
 #include "TournamentProgression.h"
 #include "TournamentRound.h"
 #include "TournamentTeam.h"
+#include "../libs/qserializer.h"
 
 
-class LadderInfo
+class LadderInfo : public QSerializer
 {
-public:
-    RulesetInfo Ruleset;
+    Q_GADGET
+    QS_SERIALIZABLE
 
-    QList<TournamentMatch> Matches = {};
-    QList<TournamentRound> Rounds = {};
-    QList<TournamentTeam> Teams = {};
+    QS_OBJECT(RulesetInfo, Ruleset)
+    QS_COLLECTION_OBJECTS(QList, TournamentMatch, Matches)
+    QS_COLLECTION_OBJECTS(QList, TournamentRound, Rounds)
+    QS_COLLECTION_OBJECTS(QList, TournamentTeam, Teams)
 
-    // only used for serialisation
-    QList<TournamentProgression> Progressions = {};
+    QS_COLLECTION_OBJECTS(QList, TournamentProgression, Progressions)
 
     // Value Range: 640 - 1366
-    int ChromaKeyWidth = 1024;
+    QS_FIELD(int, ChromaKeyWidth)
 
     // Value Range: 3 - 4
-    int PlayersPerTeam = 4;
+    QS_FIELD(int, PlayersPerTeam)
 
-    bool UseUtcTime = false;
-    bool AutoProgressScreens = true;
-    bool SplitMapPoolByMods = true;
-    bool DisplayTeamSeeds = false;
+    QS_FIELD(bool, UseUtcTime)
+    QS_FIELD(bool, AutoProgressScreens)
+    QS_FIELD(bool, SplitMapPoolByMods)
+    QS_FIELD(bool, DisplayTeamSeeds)
 
-    LadderInfo() = default;
+public:
+    LadderInfo()
+    {
+        ChromaKeyWidth = 1024;
+        PlayersPerTeam = 4;
+
+        UseUtcTime = false;
+        AutoProgressScreens = true;
+        SplitMapPoolByMods = true;
+        DisplayTeamSeeds = false;
+    };
 };
 
 

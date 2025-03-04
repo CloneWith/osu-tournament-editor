@@ -6,17 +6,25 @@
 #define SEEDINGRESULT_H
 #include "SeedingBeatmap.h"
 
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
 
-class SeedingResult
+#include "../libs/qserializer.h"
+
+class SeedingResult : public QSerializer
 {
-public:
-    QList<SeedingBeatmap> Beatmaps = {};
+    Q_GADGET
+    QS_SERIALIZABLE
 
-    QString Mod = "";
+    QS_COLLECTION_OBJECTS(QList, SeedingBeatmap, Beatmaps)
+
+    QS_FIELD(QString, Mod)
 
     // Value Range: 1 - 256
-    int Seed = 0;
+    QS_FIELD(int, Seed)
 
+public:
     SeedingResult() = default;
 };
 

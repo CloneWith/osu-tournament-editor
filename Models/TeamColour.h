@@ -5,8 +5,9 @@
 #ifndef TEAMCOLOUR_H
 #define TEAMCOLOUR_H
 
-enum TeamColour {
-    Neutral,
+enum TeamColour
+{
+    None,
     Red,
     Blue,
 };

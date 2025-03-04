@@ -4,6 +4,10 @@
 
 #ifndef TOURNAMENTROUND_H
 #define TOURNAMENTROUND_H
+
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
 #include <qdatetime.h>
 #include <qlist.h>
 #include <qstring.h>
@@ -12,30 +16,38 @@
 #include "TournamentUser.h"
 
 
-class TournamentRound
+class TournamentRound : public QSerializer
 {
-public:
-    QString Name = "";
-    QString Description = "";
+    Q_GADGET
+    QS_SERIALIZABLE
+
+    QS_FIELD(QString, Name)
+    QS_FIELD(QString, Description)
 
     // Value Range: 3 - 23
-    int BestOf = 9;
+    QS_FIELD(int, BestOf)
 
     // Value Range: 0 - 5
-    int BanCount = 5;
+    QS_FIELD(int, BanCount)
 
-    QList<RoundBeatmap> Beatmaps = {};
+    QS_COLLECTION_OBJECTS(QList, RoundBeatmap, Beatmaps)
 
-    QDateTime StartDate = QDateTime::currentDateTime();
+    QS_FIELD(QDateTime, StartDate)
 
-    bool UseBoard = false;
+    QS_FIELD(bool, UseBoard)
 
-    QList<TournamentUser> Referees = {};
+    QS_COLLECTION_OBJECTS(QList, TournamentUser, Referees)
 
     // only used for serialisation
-    QList<int> Matches = {};
+    QS_COLLECTION(QList, int, Matches)
 
-    TournamentRound() = default;
+public:
+    TournamentRound()
+    {
+        BestOf = 9;
+        BanCount = 5;
+        StartDate = QDateTime::currentDateTime();
+    };
 };
 
 

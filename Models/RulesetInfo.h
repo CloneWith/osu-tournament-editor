@@ -6,16 +6,23 @@
 #define RULESETINFO_H
 #include <qstring.h>
 
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
 
-class RulesetInfo
+#include "../libs/qserializer.h"
+
+class RulesetInfo : public QSerializer
 {
+    Q_GADGET
+    QS_SERIALIZABLE
+
+    QS_FIELD(QString, ShortName)
+    QS_FIELD(int, OnlineID)
+    QS_FIELD(QString, Name)
+    QS_FIELD(QString, InstantiationInfo)
+
 public:
-    QString ShortName = "";
-    int OnlineID = -1;
-
-    QString Name = "";
-    QString InstantiationInfo = "";
-
     RulesetInfo() = default;
 };
 

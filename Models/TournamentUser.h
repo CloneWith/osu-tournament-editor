@@ -4,29 +4,38 @@
 
 #ifndef TOURNAMENTUSER_H
 #define TOURNAMENTUSER_H
+
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
+
 #include <qstring.h>
 
+#include "../libs/qserializer.h"
 
-class TournamentUser
+class TournamentUser : public QSerializer
 {
-public:
-    TournamentUser() = default;
+    Q_GADGET
+    QS_SERIALIZABLE
 
     // JSON Property: ID
-    int OnlineID = 0;
+    QS_FIELD(int, OnlineID)
 
-    QString Username = "";
+    QS_FIELD(QString, Username)
 
     /// <summary>
     /// The player's country.
     /// </summary>
     /// JSON Property: country_code
-    QString CountryCode = "";
+    QS_FIELD(QString, CountryCode)
 
     /// <summary>
     /// The player's global rank, or 0 if not available.
     /// </summary>
-    int Rank = 0;
+    QS_FIELD(int, Rank)
+
+public:
+    TournamentUser() = default;
 };
 
 

@@ -5,16 +5,24 @@
 #ifndef TOURNAMENTPROGRESSION_H
 #define TOURNAMENTPROGRESSION_H
 
+#ifndef QS_HAS_JSON
+#define QS_HAS_JSON
+#endif
 
-class TournamentProgression
+#include "../libs/qserializer.h"
+
+class TournamentProgression : public QSerializer
 {
+    Q_GADGET
+    QS_SERIALIZABLE
+
+    QS_FIELD(int, SourceID)
+    QS_FIELD(int, TargetID)
+
+    QS_FIELD(bool, Losers)
+
 public:
-    int SourceID;
-    int TargetID;
-
-    bool Losers;
-
-    TournamentProgression(int sourceID, int targetID, bool losers = false);
+    TournamentProgression(int sourceID = 0, int targetID = 0, bool losers = false);
 };
 
 

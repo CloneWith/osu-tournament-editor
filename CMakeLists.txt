@@ -41,7 +41,6 @@ set(PROJECT_SOURCES
         Models/RoundBeatmap.h
         Models/TeamColour.h
         Models/BeatmapChoice.h
-        Models/ConditionalTournamentMatch.h
         Models/SeedingResult.h
         Models/TournamentBeatmap.h
         Models/SeedingBeatmap.h
@@ -49,6 +48,8 @@ set(PROJECT_SOURCES
         Tabs/WelcomeTab.h
         Tabs/WelcomeTab.ui
         Common.h
+        libs/qserializer.h
+        Models/ChoiceType.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
