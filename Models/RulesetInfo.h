@@ -18,9 +18,7 @@ class RulesetInfo : public QSerializer
     QS_SERIALIZABLE
 
     QS_FIELD(QString, ShortName)
-    QS_FIELD(int, OnlineID)
     QS_FIELD(QString, Name)
-    QS_FIELD(QString, InstantiationInfo)
 
 public:
     RulesetInfo() = default;

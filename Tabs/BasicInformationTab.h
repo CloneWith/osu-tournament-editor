@@ -8,6 +8,7 @@
 #include <QWidget>
 
 
+class LadderInfo;
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -22,12 +23,19 @@ class BasicInformationTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit BasicInformationTab(QWidget *parent = nullptr);
+    explicit BasicInformationTab(LadderInfo *ladderInfo, QWidget *parent = nullptr);
 
     ~BasicInformationTab() override;
 
+private slots:
+    void updateForm();
+    void updateRuleset();
+    void updateSwitches();
+    void updateSliders();
+
 private:
     Ui::BasicInformationTab *ui;
+    LadderInfo *ladder;
 };
 
 

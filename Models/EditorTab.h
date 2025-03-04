@@ -5,21 +5,42 @@
 #ifndef EDITORTAB_H
 #define EDITORTAB_H
 #include <QFile>
+#include <QTabWidget>
+#include <QWidget>
+
+#include "LadderInfo.h"
+#include "../Tabs/BasicInformationTab.h"
+
+QT_BEGIN_NAMESPACE
+
+namespace Ui
+{
+    class EditorTab;
+}
+
+QT_END_NAMESPACE
 
 /**
  * Represents a tab in the editor.
  */
-class EditorTab
+class EditorTab : public QWidget
 {
+    Q_OBJECT
+
 public:
-    QFile *File = nullptr;
+    QString FilePath;
+    LadderInfo *Ladder;
 
     bool Edited = false;
 
-    EditorTab();
-    explicit EditorTab(QFile *file, bool isNewDocument);
+    explicit EditorTab(QWidget *parent = nullptr, const QString &path = "", LadderInfo *ladder = nullptr);
 
-    ~EditorTab();
+    ~EditorTab() override;
+
+private:
+    Ui::EditorTab *ui;
+
+    BasicInformationTab *basicInformationTab;
 };
 
 

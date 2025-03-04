@@ -4,10 +4,13 @@
 #include "ProjectAboutDialog.h"
 
 #include <QFileDialog>
+#include <QMessageBox>
 
+#include "TranslationGeneratorWindow.h"
+#include "Models/LadderInfo.h"
 #include "Tabs/WelcomeTab.h"
 
-MainWindow::MainWindow(QWidget* parent)
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
       , ui(new Ui::MainWindow)
 {
@@ -39,6 +42,12 @@ void MainWindow::about()
 
 void MainWindow::createNew()
 {
+    LadderInfo testLadder = LadderInfo();
+    testLadder.Ruleset = RulesetInfo();
+    testLadder.Ruleset.ShortName = "TS";
+
+    QJsonObject jsonObject = testLadder.toJson();
+    qDebug() << QJsonDocument(jsonObject).toJson(QJsonDocument::Indented) << "\n";
 }
 
 void MainWindow::openProject()
@@ -73,9 +82,36 @@ void MainWindow::openFile()
     if (fileDialog.exec())
     {
         files = fileDialog.selectedFiles();
-    }
 
-    // TODO: Tab update and JSON deserialization
+        for (const auto &fileName: files)
+        {
+            // Look for existing tabs with the same file
+            if (std::any_of(openedTabs.begin(), openedTabs.end(), [fileName](EditorTab *tab)
+            {
+                return tab->FilePath == fileName;
+            }))
+                continue;
+
+            QFile file(fileName);
+            if (file.open(QFile::ReadOnly))
+            {
+                QJsonDocument jsonDocument = QJsonDocument::fromJson(file.readAll());
+                QJsonObject jsonObject = jsonDocument.object();
+
+                auto *testLadder = new LadderInfo();
+                testLadder->fromJson(jsonObject);
+
+                QString tabName = QString::fromUtf8(file.filesystemFileName().filename().stem().string());
+                testLadder->Name = tabName;
+                auto *tab = new EditorTab(nullptr, fileName, testLadder);
+                openedTabs.append(tab);
+                tabWidget->addTab(tab, tabName);
+            } else
+            {
+                QMessageBox::critical(this, tr("Error"), file.errorString());
+            }
+        }
+    }
 }
 
 /// <summary>
@@ -83,13 +119,19 @@ void MainWindow::openFile()
 /// </summary>
 void MainWindow::showHome()
 {
-    auto* homeTab = new WelcomeTab();
+    auto *homeTab = new WelcomeTab();
     connect(homeTab, SIGNAL(signalNew()), this, SLOT(createNew()));
     connect(homeTab, SIGNAL(signalOpen()), this, SLOT(openFile()));
     connect(homeTab, SIGNAL(signalOpenProject()), this, SLOT(openProject()));
     connect(homeTab, SIGNAL(signalHelp()), this, SLOT(help()));
 
     tabWidget->addTab(homeTab, QIcon::fromTheme(QIcon::ThemeIcon::GoHome), "Welcome");
+}
+
+void MainWindow::showTranslationGenerator()
+{
+    auto *translationWindow = new TranslationGeneratorWindow();
+    translationWindow->show();
 }
 
 /// <summary>

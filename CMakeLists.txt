@@ -20,6 +20,9 @@ set(PROJECT_SOURCES
         MainWindow.h
         MainWindow.ui
         ${TS_FILES}
+        TranslationGeneratorWindow.cpp
+        TranslationGeneratorWindow.h
+        TranslationGeneratorWindow.ui
         ProjectAboutDialog.cpp
         ProjectAboutDialog.h
         ProjectAboutDialog.ui
@@ -50,6 +53,8 @@ set(PROJECT_SOURCES
         Common.h
         libs/qserializer.h
         Models/ChoiceType.h
+        Models/Rulesets.cpp
+        Models/Rulesets.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

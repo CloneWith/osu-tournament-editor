@@ -43,6 +43,8 @@ class LadderInfo : public QSerializer
     QS_FIELD(bool, DisplayTeamSeeds)
 
 public:
+    QString Name;
+
     LadderInfo()
     {
         ChromaKeyWidth = 1024;

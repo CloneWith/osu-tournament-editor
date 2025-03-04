@@ -6,6 +6,7 @@
 #include <QSettings>
 
 #include "Common.h"
+#include "Models/EditorTab.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -34,15 +35,14 @@ private slots:
     void openFile();
     void openProject();
     void showHome();
-
-    static void showTranslationGenerator();
+    void showTranslationGenerator();
 
     void closeTab();
     void closeTab(int index);
 
 private:
     Ui::MainWindow* ui;
-    QList<QFile> openedFiles;
+    QList<EditorTab*> openedTabs;
     QTabWidget* tabWidget = new QTabWidget();
 
     void bindActions() const;
