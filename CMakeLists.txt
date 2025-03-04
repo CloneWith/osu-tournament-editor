@@ -23,6 +23,9 @@ set(PROJECT_SOURCES
         ProjectAboutDialog.cpp
         ProjectAboutDialog.h
         ProjectAboutDialog.ui
+        Tabs/BasicInformationTab.cpp
+        Tabs/BasicInformationTab.h
+        Tabs/BasicInformationTab.ui
         Models/EditorTab.cpp
         Models/EditorTab.h
         Models/LadderInfo.h
