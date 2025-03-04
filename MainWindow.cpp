@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget* parent)
     bindShortcuts();
 
     // Override the central widget layout
-    tabWidget = new QTabWidget(this);
     tabWidget->setObjectName("mainTabWidget");
     tabWidget->setMovable(true);
     tabWidget->setUsesScrollButtons(true);
@@ -82,14 +81,23 @@ void MainWindow::open()
 
 void MainWindow::showHome()
 {
-    auto* homeTab = new WelcomeTab(this);
+    auto* homeTab = new WelcomeTab();
     connect(homeTab, SIGNAL(signalNew()), this, SLOT(createNew()));
     connect(homeTab, SIGNAL(signalOpen()), this, SLOT(open()));
     connect(homeTab, SIGNAL(signalOpenProject()), this, SLOT(openProject()));
     connect(homeTab, SIGNAL(signalHelp()), this, SLOT(help()));
+
+    connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
     tabWidget->addTab(homeTab, QIcon::fromTheme(QIcon::ThemeIcon::GoHome), "Welcome");
 }
 
+void MainWindow::closeTab(int index)
+{
+    // Get widget pointer first -> Then remove tab (otherwise we cannot access the pointer)
+    auto *tab = tabWidget->widget(index);
+    tabWidget->removeTab(index);
+    delete tab;
+}
 
 void MainWindow::bindActions() const
 {
@@ -115,5 +123,6 @@ void MainWindow::bindShortcuts() const
 
 MainWindow::~MainWindow()
 {
+    delete tabWidget;
     delete ui;
 }

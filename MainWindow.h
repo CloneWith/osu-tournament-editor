@@ -29,9 +29,13 @@ private slots:
     void openProject();
     void showHome();
 
+    static void showTranslationGenerator();
+
+    void closeTab(int index);
+
 private:
     Ui::MainWindow* ui;
-    QTabWidget* tabWidget;
+    QTabWidget* tabWidget = new QTabWidget();
 
     void bindActions() const;
     void bindShortcuts() const;
