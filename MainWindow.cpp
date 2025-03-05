@@ -42,12 +42,7 @@ void MainWindow::about()
 
 void MainWindow::createNew()
 {
-    LadderInfo testLadder = LadderInfo();
-    testLadder.Ruleset = RulesetInfo();
-    testLadder.Ruleset.ShortName = "TS";
-
-    QJsonObject jsonObject = testLadder.toJson();
-    qDebug() << QJsonDocument(jsonObject).toJson(QJsonDocument::Indented) << "\n";
+    addEditorTab(tr("New Tournament"), new LadderInfo);
 }
 
 void MainWindow::openProject()
@@ -103,15 +98,20 @@ void MainWindow::openFile()
 
                 QString tabName = QString::fromUtf8(file.filesystemFileName().filename().stem().string());
                 testLadder->Name = tabName;
-                auto *tab = new EditorTab(nullptr, fileName, testLadder);
-                openedTabs.append(tab);
-                tabWidget->addTab(tab, tabName);
+                addEditorTab(tabName, testLadder);
             } else
             {
                 QMessageBox::critical(this, tr("Error"), file.errorString());
             }
         }
     }
+}
+
+void MainWindow::addEditorTab(const QString &name, LadderInfo *ladder)
+{
+    auto *tab = new EditorTab(nullptr, name, ladder);
+    openedTabs.append(tab);
+    tabWidget->addTab(tab, name);
 }
 
 /// <summary>
@@ -150,6 +150,7 @@ void MainWindow::closeTab(int index)
 {
     // Get widget pointer first -> Then remove tab (otherwise we cannot access the pointer)
     auto *tab = tabWidget->widget(index);
+
     tabWidget->removeTab(index);
     delete tab;
 }

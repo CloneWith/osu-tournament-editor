@@ -33,6 +33,7 @@ private slots:
     void help();
     void about();
     void openFile();
+
     void openProject();
     void showHome();
     void showTranslationGenerator();
@@ -47,6 +48,8 @@ private:
 
     void bindActions() const;
     void bindShortcuts() const;
+
+    void addEditorTab(const QString &name, LadderInfo *ladder);
 };
 
 
