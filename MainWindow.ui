@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>30</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -46,6 +46,7 @@
     <addaction name="actionCloseOthers"/>
     <addaction name="actionCloseAll"/>
     <addaction name="separator"/>
+    <addaction name="actionHome"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -84,6 +85,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionHome"/>
+   <addaction name="separator"/>
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
@@ -204,6 +207,14 @@
   <action name="actionOpenProject">
    <property name="text">
     <string>Open &amp;Project...</string>
+   </property>
+  </action>
+  <action name="actionHome">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::GoHome"/>
+   </property>
+   <property name="text">
+    <string>&amp;Home</string>
    </property>
   </action>
  </widget>

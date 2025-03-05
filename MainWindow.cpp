@@ -161,6 +161,7 @@ void MainWindow::bindActions() const
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionOpenProject, SIGNAL(triggered()), this, SLOT(openProject()));
     connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeTab()));
+    connect(ui->actionHome, SIGNAL(triggered()), this, SLOT(showHome()));
     connect(ui->actionTranslationGenerator, SIGNAL(triggered()), this, SLOT(showTranslationGenerator()));
     connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(help()));
     connect(ui->actionAboutProject, SIGNAL(triggered()), this, SLOT(about()));
