@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
-    <height>342</height>
+    <width>604</width>
+    <height>465</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -110,9 +110,60 @@
     </widget>
    </item>
    <item row="2" column="1">
+    <widget class="QSpinBox" name="inputChromaWidth">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimum">
+      <number>640</number>
+     </property>
+     <property name="maximum">
+      <number>1366</number>
+     </property>
+     <property name="singleStep">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelPlayersPerTeam">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Players per team</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSpinBox" name="inputPlayersPerTeam">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimum">
+      <number>3</number>
+     </property>
+     <property name="maximum">
+      <number>4</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
     <widget class="QSlider" name="sliderChromaWidth">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+      <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -140,39 +191,28 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="labelPlayersPerTeam">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="8" column="0">
+    <widget class="QCheckBox" name="switchAutoProgress">
      <property name="text">
-      <string>Players per team</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+      <string>Auto progress screens</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QSlider" name="sliderPlayersPerTeam">
-     <property name="minimum">
-      <number>3</number>
-     </property>
-     <property name="maximum">
-      <number>4</number>
-     </property>
-     <property name="pageStep">
-      <number>1</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+   <item row="7" column="0">
+    <widget class="QCheckBox" name="switchDisplaySeeds">
+     <property name="text">
+      <string>Display team seeds</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="6" column="0">
+    <widget class="QCheckBox" name="switchSplitByMods">
+     <property name="text">
+      <string>Split mappool by mods</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
     <widget class="QCheckBox" name="switchShowUtcTime">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -185,24 +225,25 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QCheckBox" name="switchAutoProgress">
-     <property name="text">
-      <string>Auto progress screens</string>
+   <item row="5" column="0" colspan="2">
+    <widget class="QSlider" name="sliderPlayersPerTeam">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QCheckBox" name="switchSplitByMods">
-     <property name="text">
-      <string>Split mappool by mods</string>
+     <property name="minimum">
+      <number>3</number>
      </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QCheckBox" name="switchDisplaySeeds">
-     <property name="text">
-      <string>Display team seeds</string>
+     <property name="maximum">
+      <number>4</number>
+     </property>
+     <property name="pageStep">
+      <number>1</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>

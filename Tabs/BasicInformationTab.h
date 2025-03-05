@@ -31,6 +31,7 @@ private slots:
     void updateForm();
     void updateRuleset();
     void updateSwitches();
+    void updateInput();
     void updateSliders();
 
 private:
