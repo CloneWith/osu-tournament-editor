@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     tabWidget->setTabsClosable(true);
     setCentralWidget(tabWidget);
 
-    if (Settings.value("hide_startup_home_tab").toBool())
+    if (!Settings.value("hide_startup_home_tab").toBool())
         showHome();
 }
 
