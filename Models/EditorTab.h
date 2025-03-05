@@ -10,6 +10,8 @@
 
 #include "LadderInfo.h"
 #include "../Tabs/BasicInformationTab.h"
+#include "../Tabs/RoundEditorTab.h"
+#include "../Tabs/TeamEditorTab.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -41,6 +43,8 @@ private:
     Ui::EditorTab *ui;
 
     BasicInformationTab *basicInformationTab;
+    TeamEditorTab *teamEditorTab;
+    RoundEditorTab *roundEditorTab;
 };
 
 

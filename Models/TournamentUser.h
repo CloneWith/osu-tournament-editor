@@ -19,7 +19,7 @@ class TournamentUser : public QSerializer
     QS_SERIALIZABLE
 
     // JSON Property: ID
-    QS_FIELD(int, OnlineID)
+    QS_FIELD(int, id)
 
     QS_FIELD(QString, Username)
 
@@ -27,7 +27,7 @@ class TournamentUser : public QSerializer
     /// The player's country.
     /// </summary>
     /// JSON Property: country_code
-    QS_FIELD(QString, CountryCode)
+    QS_FIELD(QString, country_code)
 
     /// <summary>
     /// The player's global rank, or 0 if not available.

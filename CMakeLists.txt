@@ -55,6 +55,20 @@ set(PROJECT_SOURCES
         Models/ChoiceType.h
         Models/Rulesets.cpp
         Models/Rulesets.h
+        Tabs/TeamEditorTab.cpp
+        Tabs/TeamEditorTab.h
+        Tabs/TeamEditorTab.ui
+        Tabs/RoundEditorTab.cpp
+        Tabs/RoundEditorTab.h
+        Tabs/RoundEditorTab.ui
+        Models/TournamentRoundModel.cpp
+        Models/TournamentRoundModel.h
+        Models/TournamentTeamModel.cpp
+        Models/TournamentTeamModel.h
+        Models/RoundBeatmapModel.cpp
+        Models/RoundBeatmapModel.h
+        Models/TournamentUserModel.cpp
+        Models/TournamentUserModel.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
