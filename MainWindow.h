@@ -38,18 +38,22 @@ private slots:
     void showHome();
     void showTranslationGenerator();
 
+    void addTab(Tab *tab, const QIcon &icon, const QString &name);
+
     void closeTab();
     void closeTab(int index);
 
+    void updateActionState();
+
 private:
     Ui::MainWindow* ui;
-    QList<EditorTab*> openedTabs;
+    QList<Tab*> openedTabs;
     QTabWidget* tabWidget = new QTabWidget();
 
     void bindActions() const;
     void bindShortcuts() const;
 
-    void addEditorTab(const QString &name, LadderInfo *ladder);
+    void addEditorTab(const QString &path, const QString &name, LadderInfo *ladder);
 };
 
 

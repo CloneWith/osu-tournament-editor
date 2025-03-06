@@ -41,8 +41,8 @@ private:
     LadderInfo *ladder;
     TournamentRound currentRound;
     TournamentRoundModel *model;
-    RoundBeatmapModel *mapModel;
-    TournamentUserModel *refereeModel;
+    RoundBeatmapModel *mapModel{};
+    TournamentUserModel *refereeModel{};
 };
 
 

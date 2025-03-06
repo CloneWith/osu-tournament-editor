@@ -8,7 +8,7 @@
 #include "Rulesets.h"
 
 EditorTab::EditorTab(QWidget *parent, const QString &path, LadderInfo *ladder)
-    : QWidget(parent), ui(new Ui::EditorTab)
+    : QWidget(parent), ui(new Ui::EditorTab), Tab(this, path, true)
 {
     ui->setupUi(this);
 

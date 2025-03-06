@@ -8,7 +8,7 @@
 #include "ui_WelcomeTab.h"
 
 
-WelcomeTab::WelcomeTab(QWidget *parent) : QWidget(parent), ui(new Ui::WelcomeTab)
+WelcomeTab::WelcomeTab(QWidget *parent) : QWidget(parent), ui(new Ui::WelcomeTab), Tab(this, "", false)
 {
     ui->setupUi(this);
 

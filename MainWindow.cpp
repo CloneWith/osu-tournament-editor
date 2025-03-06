@@ -21,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Override the central widget layout
     tabWidget->setObjectName("mainTabWidget");
-    tabWidget->setMovable(true);
     tabWidget->setUsesScrollButtons(true);
     tabWidget->setTabsClosable(true);
     setCentralWidget(tabWidget);
@@ -42,31 +41,17 @@ void MainWindow::about()
 
 void MainWindow::createNew()
 {
-    addEditorTab(tr("New Tournament"), new LadderInfo);
+    addEditorTab("", tr("New Tournament"), new LadderInfo);
 }
 
 void MainWindow::openProject()
 {
-    QFileDialog fileDialog(this);
-    QString dir;
-
-    fileDialog.setWindowTitle(tr("Select a tournament directory"));
-    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
-    fileDialog.setFileMode(QFileDialog::Directory);
-    fileDialog.setNameFilter(tr("Tournament Directory"));
-
-    if (fileDialog.exec())
-    {
-        dir = fileDialog.selectedFiles()[0];
-    }
-
-    // TODO: Tab update and JSON deserialization
+    QMessageBox::information(this, tr("Information"), tr("This feature is working in progress."));
 }
 
 void MainWindow::openFile()
 {
     QFileDialog fileDialog(this);
-    QStringList files;
 
     fileDialog.setWindowTitle(tr("Select a tournament bracket file"));
     fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
@@ -76,12 +61,12 @@ void MainWindow::openFile()
     // exec() would wait until user action finished.
     if (fileDialog.exec())
     {
-        files = fileDialog.selectedFiles();
+        QStringList files = fileDialog.selectedFiles();
 
         for (const auto &fileName: files)
         {
             // Look for existing tabs with the same file
-            if (std::any_of(openedTabs.begin(), openedTabs.end(), [fileName](EditorTab *tab)
+            if (std::any_of(openedTabs.begin(), openedTabs.end(), [fileName](const Tab *tab)
             {
                 return tab->FilePath == fileName;
             }))
@@ -98,7 +83,7 @@ void MainWindow::openFile()
 
                 QString tabName = QString::fromUtf8(file.filesystemFileName().filename().stem().string());
                 testLadder->Name = tabName;
-                addEditorTab(tabName, testLadder);
+                addEditorTab(fileName, tabName, testLadder);
             } else
             {
                 QMessageBox::critical(this, tr("Error"), file.errorString());
@@ -107,11 +92,10 @@ void MainWindow::openFile()
     }
 }
 
-void MainWindow::addEditorTab(const QString &name, LadderInfo *ladder)
+void MainWindow::addEditorTab(const QString &path, const QString &name, LadderInfo *ladder)
 {
-    auto *tab = new EditorTab(nullptr, name, ladder);
-    openedTabs.append(tab);
-    tabWidget->addTab(tab, name);
+    auto *tab = new EditorTab(nullptr, path, ladder);
+    addTab(tab, QIcon::fromTheme(QIcon::ThemeIcon::Computer), name);
 }
 
 /// <summary>
@@ -125,34 +109,59 @@ void MainWindow::showHome()
     connect(homeTab, SIGNAL(signalOpenProject()), this, SLOT(openProject()));
     connect(homeTab, SIGNAL(signalHelp()), this, SLOT(help()));
 
-    tabWidget->addTab(homeTab, QIcon::fromTheme(QIcon::ThemeIcon::GoHome), "Welcome");
+    addTab(homeTab, QIcon::fromTheme(QIcon::ThemeIcon::GoHome), "Welcome");
 }
 
 void MainWindow::showTranslationGenerator()
 {
+    QMessageBox::information(this, tr("Information"),
+        tr("This feature is going to be implemented in the future."));
     auto *translationWindow = new TranslationGeneratorWindow();
     translationWindow->show();
 }
 
-/// <summary>
+void MainWindow::addTab(Tab *tab, const QIcon &icon, const QString &name)
+{
+    if (openedTabs.contains(tab))
+    {
+        qDebug() << "The tab " << tab->FilePath << " was already opened, skipping.";
+        return;
+    }
+
+    openedTabs.append(tab);
+    tabWidget->addTab(tab->Content, icon, name);
+}
+
 /// Closes the currently selected tab in the tab widget.
-/// </summary>
 void MainWindow::closeTab()
 {
     closeTab(tabWidget->currentIndex());
 }
 
-/// <summary>
 /// Closes the tab with specific index in the tab widget.
-/// </summary>
-/// <param name="index">the index of the tab</param>
-void MainWindow::closeTab(int index)
+/// @param index the index of the tab
+void MainWindow::closeTab(const int index)
 {
     // Get widget pointer first -> Then remove tab (otherwise we cannot access the pointer)
-    auto *tab = tabWidget->widget(index);
+    const auto *tab = tabWidget->widget(index);
 
     tabWidget->removeTab(index);
+    openedTabs.removeAt(index);
     delete tab;
+}
+
+void MainWindow::updateActionState()
+{
+    bool hasEditorTabs = openedTabs.count() > 0;
+    bool hasAnyTabs = tabWidget->count() > 0;
+    bool isEditorTab = hasAnyTabs && openedTabs[tabWidget->currentIndex()]->Editable;
+    ui->actionCloseOthers->setEnabled(tabWidget->count() > 1);
+    ui->actionClose->setEnabled(hasAnyTabs);
+    ui->actionCloseAll->setEnabled(hasAnyTabs);
+
+    ui->actionSave->setEnabled(isEditorTab);
+    ui->actionSaveAs->setEnabled(isEditorTab);
+    ui->actionSaveAll->setEnabled(hasEditorTabs);
 }
 
 void MainWindow::bindActions() const
@@ -169,6 +178,7 @@ void MainWindow::bindActions() const
     connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
+    connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateActionState()));
 }
 
 void MainWindow::bindShortcuts() const

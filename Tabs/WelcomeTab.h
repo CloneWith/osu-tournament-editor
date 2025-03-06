@@ -9,6 +9,7 @@
 #include <QWidget>
 
 #include "../Common.h"
+#include "../Models/Tab.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -19,7 +20,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class WelcomeTab : public QWidget
+class WelcomeTab : public QWidget, public Tab
 {
     Q_OBJECT
 

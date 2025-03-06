@@ -69,6 +69,7 @@ set(PROJECT_SOURCES
         Models/RoundBeatmapModel.h
         Models/TournamentUserModel.cpp
         Models/TournamentUserModel.h
+        Models/Tab.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

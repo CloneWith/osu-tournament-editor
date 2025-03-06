@@ -9,6 +9,7 @@
 #include <QWidget>
 
 #include "LadderInfo.h"
+#include "Tab.h"
 #include "../Tabs/BasicInformationTab.h"
 #include "../Tabs/RoundEditorTab.h"
 #include "../Tabs/TeamEditorTab.h"
@@ -25,12 +26,11 @@ QT_END_NAMESPACE
 /**
  * Represents a tab in the editor.
  */
-class EditorTab : public QWidget
+class EditorTab : public QWidget, public Tab
 {
     Q_OBJECT
 
 public:
-    QString FilePath;
     LadderInfo *Ladder;
 
     bool Edited = false;
