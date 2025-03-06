@@ -92,10 +92,68 @@ void MainWindow::openFile()
     }
 }
 
+void MainWindow::save(const int index, const bool askNewPath = false)
+{
+    Tab *targetTab = openedTabs[index];
+    QString newPath = targetTab->FilePath;
+
+    if (!targetTab->Editable) return;
+
+    if (askNewPath || targetTab->FilePath.isEmpty())
+    {
+        QFileDialog fileDialog(this);
+
+        fileDialog.setWindowTitle(tr("Select save location"));
+        fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+        fileDialog.setFileMode(QFileDialog::AnyFile);
+        fileDialog.setNameFilter(tr("Tournament File (*.json)"));
+
+        if (fileDialog.exec())
+        {
+            if (fileDialog.selectedFiles().count() == 0) return;
+            newPath = fileDialog.selectedFiles()[0];
+        }
+    }
+
+    if (newPath.isEmpty()) return;
+
+    QFile file(newPath);
+    file.open(QFile::WriteOnly);
+    const auto ladder = targetTab->GetLadderInfo();
+    const auto doc = QJsonDocument(ladder->toJson());
+    file.write(doc.toJson(QJsonDocument::Indented));
+    file.close();
+
+    // Update the file path after writing changes.
+    targetTab->FilePath = newPath;
+    tabWidget->setTabText(index, QString::fromStdString(file.filesystemFileName().filename().stem().string()));
+}
+
+void MainWindow::saveCurrent()
+{
+    save(tabWidget->currentIndex(), false);
+}
+
+void MainWindow::saveAs()
+{
+    save(tabWidget->currentIndex(), true);
+}
+
+void MainWindow::saveAll()
+{
+    for (int index = 0; index < tabWidget->count(); index++)
+    {
+        save(index, false);
+    }
+}
+
 void MainWindow::addEditorTab(const QString &path, const QString &name, LadderInfo *ladder)
 {
     auto *tab = new EditorTab(nullptr, path, ladder);
     addTab(tab, QIcon::fromTheme(QIcon::ThemeIcon::Computer), name);
+
+    // Manually update the action state since we don't have a signal for newly inserted tabs.
+    updateActionState();
 }
 
 /// <summary>
@@ -132,12 +190,6 @@ void MainWindow::addTab(Tab *tab, const QIcon &icon, const QString &name)
     tabWidget->addTab(tab->Content, icon, name);
 }
 
-/// Closes the currently selected tab in the tab widget.
-void MainWindow::closeTab()
-{
-    closeTab(tabWidget->currentIndex());
-}
-
 /// Closes the tab with specific index in the tab widget.
 /// @param index the index of the tab
 void MainWindow::closeTab(const int index)
@@ -150,11 +202,38 @@ void MainWindow::closeTab(const int index)
     delete tab;
 }
 
+/// Closes the currently selected tab in the tab widget.
+void MainWindow::closeCurrent()
+{
+    closeTab(tabWidget->currentIndex());
+}
+
+void MainWindow::closeOthers()
+{
+    for (int i = 0; i < tabWidget->currentIndex(); i++)
+        closeTab(0);
+
+    while (tabWidget->count() > 1)
+        closeTab(1);
+}
+
+void MainWindow::closeAll()
+{
+    // Close actions affect the tab list, so we should always remove a tab with a certain index.
+    while (tabWidget->count() > 0)
+        closeTab(0);
+}
+
+
 void MainWindow::updateActionState()
 {
-    bool hasEditorTabs = openedTabs.count() > 0;
-    bool hasAnyTabs = tabWidget->count() > 0;
-    bool isEditorTab = hasAnyTabs && openedTabs[tabWidget->currentIndex()]->Editable;
+    const bool hasEditorTabs = std::any_of(openedTabs.begin(), openedTabs.end(), [](const Tab *tab)
+    {
+        return tab->Editable;
+    });
+    const bool hasAnyTabs = tabWidget->count() > 0;
+    const bool isEditorTab = hasAnyTabs && openedTabs[tabWidget->currentIndex()]->Editable;
+
     ui->actionCloseOthers->setEnabled(tabWidget->count() > 1);
     ui->actionClose->setEnabled(hasAnyTabs);
     ui->actionCloseAll->setEnabled(hasAnyTabs);
@@ -169,7 +248,12 @@ void MainWindow::bindActions() const
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(createNew()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionOpenProject, SIGNAL(triggered()), this, SLOT(openProject()));
-    connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeTab()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveCurrent()));
+    connect(ui->actionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
+    connect(ui->actionSaveAll, SIGNAL(triggered()), this, SLOT(saveAll()));
+    connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeCurrent()));
+    connect(ui->actionCloseOthers, SIGNAL(triggered()), this, SLOT(closeOthers()));
+    connect(ui->actionCloseAll, SIGNAL(triggered()), this, SLOT(closeAll()));
     connect(ui->actionHome, SIGNAL(triggered()), this, SLOT(showHome()));
     connect(ui->actionTranslationGenerator, SIGNAL(triggered()), this, SLOT(showTranslationGenerator()));
     connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(help()));

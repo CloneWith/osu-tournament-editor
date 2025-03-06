@@ -20,7 +20,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class WelcomeTab : public QWidget, public Tab
+class WelcomeTab final : public QWidget, public Tab
 {
     Q_OBJECT
 

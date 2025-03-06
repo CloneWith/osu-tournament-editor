@@ -5,7 +5,6 @@
 #ifndef EDITORTAB_H
 #define EDITORTAB_H
 #include <QFile>
-#include <QTabWidget>
 #include <QWidget>
 
 #include "LadderInfo.h"
@@ -26,7 +25,7 @@ QT_END_NAMESPACE
 /**
  * Represents a tab in the editor.
  */
-class EditorTab : public QWidget, public Tab
+class EditorTab final : public QWidget, public Tab
 {
     Q_OBJECT
 
@@ -38,6 +37,11 @@ public:
     explicit EditorTab(QWidget *parent = nullptr, const QString &path = "", LadderInfo *ladder = nullptr);
 
     ~EditorTab() override;
+
+    LadderInfo* GetLadderInfo() override
+    {
+        return Ladder;
+    }
 
 private:
     Ui::EditorTab *ui;

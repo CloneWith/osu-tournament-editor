@@ -7,18 +7,28 @@
 #include <qstring.h>
 
 #include <utility>
+#include "LadderInfo.h"
 
 /// The base class for all tabs, making it convenient to manage them.
 class Tab
 {
+protected:
+    ~Tab() = default;
+
 public:
     QWidget *Content;
     QString FilePath;
     bool Editable;
 
-    Tab(QWidget *content, QString path, bool editable) : Content(content), FilePath(std::move(path)), Editable(editable)
+    Tab(QWidget *content, QString path, const bool editable)
+        : Content(content), FilePath(std::move(path)), Editable(editable)
     {
-    };
+    }
+
+    virtual LadderInfo* GetLadderInfo()
+    {
+        return nullptr;
+    }
 };
 
 

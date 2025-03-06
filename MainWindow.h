@@ -34,13 +34,20 @@ private slots:
     void about();
     void openFile();
 
+    void save(int index, bool askNewPath);
+    void saveCurrent();
+    void saveAs();
+    void saveAll();
+
     void openProject();
     void showHome();
     void showTranslationGenerator();
 
     void addTab(Tab *tab, const QIcon &icon, const QString &name);
 
-    void closeTab();
+    void closeCurrent();
+    void closeOthers();
+    void closeAll();
     void closeTab(int index);
 
     void updateActionState();
