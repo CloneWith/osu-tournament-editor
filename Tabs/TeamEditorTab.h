@@ -52,7 +52,6 @@ private slots:
 private:
     Ui::TeamEditorTab *ui;
     LadderInfo *ladder;
-    int currentTeamIndex = -1;
     TournamentTeam currentTeam;
     TournamentTeamModel *model;
     TournamentUserModel *playerModel = nullptr;

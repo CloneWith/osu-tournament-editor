@@ -13,7 +13,7 @@ TeamEditorTab::TeamEditorTab(LadderInfo *ladderInfo, QWidget *parent) : QWidget(
     ui->setupUi(this);
 
     this->ladder = ladderInfo;
-    this->model = new TournamentTeamModel(ladderInfo->Teams);
+    this->model = new TournamentTeamModel(ladder->Teams);
 
     ui->listTeams->setModel(model);
 
@@ -62,9 +62,8 @@ void TeamEditorTab::updateWidgetState()
 void TeamEditorTab::updateContent()
 {
     const QModelIndex index = ui->listTeams->currentIndex();
-    currentTeamIndex = index.row();
 
-    currentTeam = index.isValid() ? model->data(index, Qt::EditRole).value<TournamentTeam>() : TournamentTeam();
+    currentTeam = index.isValid() && model->rowCount() > 0 ? model->data(index, Qt::EditRole).value<TournamentTeam>() : TournamentTeam();
 
     ui->inputTeamName->setText(currentTeam.FullName);
     ui->inputTeamAcronym->setText(currentTeam.Acronym);
@@ -86,13 +85,20 @@ void TeamEditorTab::addTeam()
 void TeamEditorTab::removeTeam()
 {
     // TODO: Support removing one line once only for now. May implement multiple line management?
-    ladder->Teams.removeAt(currentTeamIndex);
-    model->removeRows(currentTeamIndex, 1);
+    const auto index = ui->listTeams->currentIndex();
+
+    if (!index.isValid() || index.row() >= model->rowCount()) return;
+
+    // The team list tried to access an unavailable item?
+    // ui->listTeams->reset();
+
+    ladder->Teams.removeAt(index.row());
+    model->removeRows(index.row(), 1);
 }
 
 void TeamEditorTab::addPlayer()
 {
-    ladder->Teams[currentTeamIndex].Players.append(TournamentUser());
+    ladder->Teams[ui->listTeams->currentIndex().row()].Players.append(TournamentUser());
     currentTeam.Players.append(TournamentUser());
     playerModel->addUser(TournamentUser());
 }
@@ -100,7 +106,10 @@ void TeamEditorTab::addPlayer()
 void TeamEditorTab::removePlayer()
 {
     const QModelIndex index = ui->listPlayers->currentIndex();
-    ladder->Teams[currentTeamIndex].Players.removeAt(index.row());
+
+    if (!index.isValid()) return;
+
+    ladder->Teams[index.row()].Players.removeAt(index.row());
     currentTeam.Players.removeAt(index.row());
     playerModel->removeRows(index.row(), 1);
 }
@@ -131,16 +140,15 @@ void TeamEditorTab::syncTeamToLadder()
 {
     // Step 1: Get updated team from model (should have been updated by commitTeamToModel)
     const auto index = ui->listTeams->currentIndex();
-    currentTeamIndex = index.row();
     model->setData(index, QVariant::fromValue(currentTeam), Qt::EditRole);
-    const auto newTeamData = model->GetTeamAt(currentTeamIndex);
+    const auto newTeamData = model->GetTeamAt(index.row());
 
     // Step 2: Update normal fields without breaking the reference to inner lists
-    ladder->Teams[currentTeamIndex].FullName = newTeamData.FullName;
-    ladder->Teams[currentTeamIndex].Acronym = newTeamData.Acronym;
-    ladder->Teams[currentTeamIndex].FlagName = newTeamData.FlagName;
-    ladder->Teams[currentTeamIndex].Seed = newTeamData.Seed;
-    ladder->Teams[currentTeamIndex].LastYearPlacing = newTeamData.LastYearPlacing;
+    ladder->Teams[index.row()].FullName = newTeamData.FullName;
+    ladder->Teams[index.row()].Acronym = newTeamData.Acronym;
+    ladder->Teams[index.row()].FlagName = newTeamData.FlagName;
+    ladder->Teams[index.row()].Seed = newTeamData.Seed;
+    ladder->Teams[index.row()].LastYearPlacing = newTeamData.LastYearPlacing;
 }
 
 // Player data changes come from the model.
@@ -159,7 +167,7 @@ void TeamEditorTab::commitPlayerChanges()
     // Step 3: Commit back to currentTeam and parent model, and forward to ladder
     currentTeam.Players[index.row()] = newPlayerData;
     commitTeamToModel();
-    ladder->Teams[currentTeamIndex].Players[index.row()] = newPlayerData;
+    ladder->Teams[index.row()].Players[index.row()] = newPlayerData;
 }
 
 void TeamEditorTab::updatePlayerList()
@@ -179,7 +187,9 @@ void TeamEditorTab::updateAverageRank()
 {
     const double newAverage = currentTeam.GetAverageRank();
     ui->textAverageRank->setText(QString::fromStdString(newAverage != -1 ? std::to_string(newAverage) : "NaN"));
-    ladder->Teams[currentTeamIndex].AverageRank = newAverage;
+
+    if (ui->listPlayers->currentIndex().isValid())
+        ladder->Teams[ui->listPlayers->currentIndex().row()].AverageRank = newAverage;
 }
 
 TeamEditorTab::~TeamEditorTab()
