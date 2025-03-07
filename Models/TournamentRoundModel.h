@@ -26,6 +26,11 @@ public:
     void addRound(const TournamentRound &round);
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
+    [[nodiscard]] TournamentRound GetRoundAt(const int &index) const
+    {
+        return roundList.at(index);
+    }
+
 private:
     QList<TournamentRound> roundList;
 };

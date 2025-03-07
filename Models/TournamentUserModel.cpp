@@ -14,7 +14,7 @@ int TournamentUserModel::columnCount(const QModelIndex &parent) const
     return parent.isValid() ? 0 : 4;
 }
 
-QVariant TournamentUserModel::data(const QModelIndex &index, int role) const
+QVariant TournamentUserModel::data(const QModelIndex &index, const int role) const
 {
     if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
         return {};
@@ -33,7 +33,7 @@ QVariant TournamentUserModel::data(const QModelIndex &index, int role) const
     }
 }
 
-QVariant TournamentUserModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant TournamentUserModel::headerData(const int section, const Qt::Orientation orientation, const int role) const
 {
     if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
         return {};
@@ -90,7 +90,7 @@ void TournamentUserModel::addUser(const TournamentUser &data)
     endInsertRows();
 }
 
-bool TournamentUserModel::removeRows(int row, int count, const QModelIndex& parent)
+bool TournamentUserModel::removeRows(const int row, const int count, const QModelIndex &parent)
 {
     if (row < 0 || row >= userList.size() || count <= 0)
         return false;
@@ -102,4 +102,3 @@ bool TournamentUserModel::removeRows(int row, int count, const QModelIndex& pare
     emit dataUpdated();
     return true;
 }
-

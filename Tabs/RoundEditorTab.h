@@ -32,9 +32,25 @@ public:
 
 private slots:
     void updateName();
+    void updateWidgetState();
     void updateContent();
-    void writeContent();
+
+    void commitBeatmapChanges();
+    void commitRefereeChanges();
     void updateRightList();
+
+    void addRound();
+    void removeRound();
+
+    void addBeatmap();
+    void removeBeatmap();
+
+    void addReferee();
+    void removeReferee();
+
+    void commitRoundChanges();
+    void commitRoundToModel();
+    void syncRoundToLadder();
 
 private:
     Ui::RoundEditorTab *ui;

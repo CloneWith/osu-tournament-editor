@@ -167,7 +167,7 @@ void TeamEditorTab::commitPlayerChanges()
     // Step 3: Commit back to currentTeam and parent model, and forward to ladder
     currentTeam.Players[index.row()] = newPlayerData;
     commitTeamToModel();
-    ladder->Teams[index.row()].Players[index.row()] = newPlayerData;
+    ladder->Teams[ui->listTeams->currentIndex().row()].Players[index.row()] = newPlayerData;
 }
 
 void TeamEditorTab::updatePlayerList()

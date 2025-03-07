@@ -37,6 +37,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonRemoveRound">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -61,7 +64,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="inputRoundName"/>
+      <widget class="QLineEdit" name="inputRoundName">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="labelRoundDescription">
@@ -71,7 +78,11 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="inputRoundDescription"/>
+      <widget class="QLineEdit" name="inputRoundDescription">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="labelDate">
@@ -82,6 +93,9 @@
      </item>
      <item row="4" column="1">
       <widget class="QDateTimeEdit" name="inputDate">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -92,6 +106,9 @@
      </item>
      <item row="7" column="0" colspan="2">
       <widget class="QCheckBox" name="checkBoxUseBoard">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Use board map pool layout</string>
        </property>
@@ -99,6 +116,9 @@
      </item>
      <item row="5" column="1">
       <widget class="QSpinBox" name="inputBestOf">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -118,6 +138,9 @@
      </item>
      <item row="6" column="1">
       <widget class="QSpinBox" name="inputBanCount">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -174,6 +197,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonAddBeatmap">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -184,6 +210,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonRemoveBeatmap">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -205,6 +234,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonAddReferee">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -215,6 +247,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonRemoveReferee">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>

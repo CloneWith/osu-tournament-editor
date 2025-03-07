@@ -51,7 +51,7 @@ void TournamentTeamModel::addTeam(const TournamentTeam& data)
     emit dataUpdated();
 }
 
-bool TournamentTeamModel::removeRows(int row, int count, const QModelIndex& parent)
+bool TournamentTeamModel::removeRows(const int row, const int count, const QModelIndex& parent)
 {
     if (row < 0 || row >= teamList.size() || count <= 0)
         return false;
