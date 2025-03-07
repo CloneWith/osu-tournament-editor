@@ -14,7 +14,7 @@ int TournamentRoundModel::rowCount(const QModelIndex& parent) const
 QVariant TournamentRoundModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || role != Qt::DisplayRole && role != Qt::EditRole)
-        return QVariant();
+        return {};
 
     if (role == Qt::DisplayRole) return roundList[index.row()].Name;
     return QVariant::fromValue(roundList[index.row()]);
@@ -50,7 +50,7 @@ void TournamentRoundModel::addRound(const TournamentRound& data)
     endInsertRows();
 }
 
-bool TournamentRoundModel::removeRows(int row, int count, const QModelIndex& parent)
+bool TournamentRoundModel::removeRows(const int row, const int count, const QModelIndex& parent)
 {
     if (row < 0 || row >= roundList.size() || count <= 0)
         return false;

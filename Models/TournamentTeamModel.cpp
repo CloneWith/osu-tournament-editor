@@ -12,7 +12,7 @@ int TournamentTeamModel::rowCount(const QModelIndex& parent) const
 QVariant TournamentTeamModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || role != Qt::DisplayRole && role != Qt::EditRole)
-        return QVariant();
+        return {};
 
     if (role == Qt::DisplayRole) return teamList[index.row()].FullName;
     return QVariant::fromValue(teamList[index.row()]);
@@ -31,6 +31,9 @@ bool TournamentTeamModel::setData(const QModelIndex& index, const QVariant& valu
     {
         teamList[index.row()] = value.value<TournamentTeam>();
     }
+
+    emit dataChanged(index, index);
+    emit dataUpdated();
     return true;
 }
 
@@ -44,6 +47,8 @@ void TournamentTeamModel::addTeam(const TournamentTeam& data)
     beginInsertRows(QModelIndex(), teamList.size(), teamList.size());
     teamList.append(data);
     endInsertRows();
+
+    emit dataUpdated();
 }
 
 bool TournamentTeamModel::removeRows(int row, int count, const QModelIndex& parent)
@@ -54,5 +59,7 @@ bool TournamentTeamModel::removeRows(int row, int count, const QModelIndex& pare
     beginRemoveRows(parent, row, row + count - 1);
     teamList.removeAt(row);
     endRemoveRows();
+
+    emit dataUpdated();
     return true;
 }

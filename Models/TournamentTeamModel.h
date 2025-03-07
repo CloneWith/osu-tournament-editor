@@ -18,16 +18,24 @@ public:
         teamList = source;
     }
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    [[nodiscard]] int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    [[nodiscard]] QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     bool setData(const QModelIndex& index, const QVariant& value, int role) override;
-    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    [[nodiscard]] Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     void addTeam(const TournamentTeam& data);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
 
+    [[nodiscard]] TournamentTeam GetTeamAt(const int &index) const
+    {
+        return teamList.at(index);
+    }
+
 private:
     QList<TournamentTeam> teamList;
+
+signals:
+    void dataUpdated();
 };
 
 

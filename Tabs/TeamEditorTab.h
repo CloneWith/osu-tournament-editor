@@ -31,16 +31,29 @@ public:
 
 private slots:
     void updateName();
+    void updateWidgetState();
     void updateContent();
-    void writeContent();
+
+    void addTeam();
+    void removeTeam();
+
+    void addPlayer();
+    void removePlayer();
+
+    void commitTeamChanges();
+    void commitTeamToModel();
+    void syncTeamToLadder();
+    void commitPlayerChanges();
+
     void updatePlayerList();
 
 private:
     Ui::TeamEditorTab *ui;
     LadderInfo *ladder;
+    int currentTeamIndex = -1;
     TournamentTeam currentTeam;
     TournamentTeamModel *model;
-    TournamentUserModel *playerModel;
+    TournamentUserModel *playerModel = nullptr;
 };
 
 

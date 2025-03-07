@@ -37,6 +37,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonRemoveTeam">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -61,7 +64,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="inputTeamName"/>
+      <widget class="QLineEdit" name="inputTeamName">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="labelTeamAcronym">
@@ -71,7 +78,11 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="inputTeamAcronym"/>
+      <widget class="QLineEdit" name="inputTeamAcronym">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="labelFlag">
@@ -89,6 +100,9 @@
      </item>
      <item row="6" column="1">
       <widget class="QSpinBox" name="inputLastYearPlacing">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -124,7 +138,11 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="inputFlag"/>
+      <widget class="QLineEdit" name="inputFlag">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="labelSeed">
@@ -134,7 +152,11 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="inputSeed"/>
+      <widget class="QLineEdit" name="inputSeed">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0" colspan="2">
       <widget class="QListView" name="listTeams">
@@ -164,6 +186,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonAddPlayer">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -174,6 +199,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="buttonRemovePlayer">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
