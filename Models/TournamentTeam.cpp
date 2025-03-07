@@ -9,7 +9,8 @@ QString TournamentTeam::ToString()
     return FullName != "" ? FullName : Acronym;
 }
 
-double TournamentTeam::GetAverageRank() const
+/// Calculate and update the average rank of a team.
+double TournamentTeam::GetAverageRank()
 {
     QList<int> ranks = {};
     double sum = 0;
@@ -20,6 +21,8 @@ double TournamentTeam::GetAverageRank() const
         sum += user.Rank;
     }
 
-    if (ranks.isEmpty()) return 0;
-    return sum / ranks.length();
+    if (ranks.isEmpty()) return -1;
+
+    AverageRank = sum / ranks.length();
+    return AverageRank;
 }

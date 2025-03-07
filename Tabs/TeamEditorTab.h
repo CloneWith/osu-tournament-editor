@@ -47,6 +47,8 @@ private slots:
 
     void updatePlayerList();
 
+    void updateAverageRank();
+
 private:
     Ui::TeamEditorTab *ui;
     LadderInfo *ladder;

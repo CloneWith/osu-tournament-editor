@@ -71,8 +71,8 @@ void TeamEditorTab::updateContent()
     ui->inputFlag->setText(currentTeam.FlagName);
     ui->inputSeed->setText(currentTeam.Seed);
     ui->inputLastYearPlacing->setValue(currentTeam.LastYearPlacing);
-    ui->textAverageRank->setText(QString::fromStdString(std::to_string(currentTeam.AverageRank)));
 
+    updateAverageRank();
     updatePlayerList();
     updateWidgetState();
 }
@@ -120,6 +120,8 @@ void TeamEditorTab::commitTeamToModel()
     currentTeam.FlagName = ui->inputFlag->text();
     currentTeam.Seed = ui->inputSeed->text();
     currentTeam.LastYearPlacing = ui->inputLastYearPlacing->value();
+
+    updateAverageRank();
 
     // Step 2: Commit new team data to model
     model->setData(ui->listTeams->currentIndex(), QVariant::fromValue(currentTeam), Qt::EditRole);
@@ -171,6 +173,13 @@ void TeamEditorTab::updatePlayerList()
     connect(playerModel, SIGNAL(dataUpdated()), this, SLOT(commitPlayerChanges()));
     connect(ui->listPlayers->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(updateWidgetState()));
+}
+
+void TeamEditorTab::updateAverageRank()
+{
+    const double newAverage = currentTeam.GetAverageRank();
+    ui->textAverageRank->setText(QString::fromStdString(newAverage != -1 ? std::to_string(newAverage) : "NaN"));
+    ladder->Teams[currentTeamIndex].AverageRank = newAverage;
 }
 
 TeamEditorTab::~TeamEditorTab()

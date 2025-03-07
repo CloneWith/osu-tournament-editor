@@ -43,14 +43,15 @@ public:
 
     QS_FIELD(double, AverageRank)
 
-    [[nodiscard]] double GetAverageRank() const;
-
     QS_FIELD(QString, Seed)
 
     // Value Range: 0 - 256
     QS_FIELD(int, LastYearPlacing)
 
     QS_COLLECTION_OBJECTS(QList, TournamentUser, Players)
+
+public:
+    [[nodiscard]] double GetAverageRank();
 
     QString ToString();
 };
