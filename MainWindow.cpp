@@ -68,7 +68,24 @@ void MainWindow::openProject()
     QMessageBox::information(this, tr("Information"), tr("This feature is working in progress."));
 }
 
-void MainWindow::openFile()
+void MainWindow::recordToRecent(const QString &fileName)
+{
+    auto recentList = Settings.value("recent_files").toStringList();
+
+    if (recentList.contains(fileName))
+    {
+        recentList.swapItemsAt(recentList.indexOf(fileName), 0);
+    }
+    else
+    {
+        recentList.insert(0, fileName);
+    }
+
+    Settings.setValue("recent_files", recentList);
+    emit recentUpdated();
+}
+
+void MainWindow::askOpenFile()
 {
     QFileDialog fileDialog(this);
 
@@ -84,30 +101,35 @@ void MainWindow::openFile()
 
         for (const auto &fileName: files)
         {
-            // Look for existing tabs with the same file
-            if (std::any_of(openedTabs.begin(), openedTabs.end(), [fileName](const Tab *tab)
-            {
-                return tab->FilePath == fileName;
-            }))
-                continue;
-
-            QFile file(fileName);
-            if (file.open(QFile::ReadOnly))
-            {
-                QJsonDocument jsonDocument = QJsonDocument::fromJson(file.readAll());
-                QJsonObject jsonObject = jsonDocument.object();
-
-                auto *testLadder = new LadderInfo();
-                testLadder->fromJson(jsonObject);
-
-                QString tabName = QString::fromUtf8(file.filesystemFileName().filename().stem().string());
-                testLadder->Name = tabName;
-                addEditorTab(fileName, tabName, testLadder);
-            } else
-            {
-                QMessageBox::critical(this, tr("Error"), file.errorString());
-            }
+            openFile(fileName);
         }
+    }
+}
+
+void MainWindow::openFile(const QString &fileName)
+{
+    // Look for existing tabs with the same file
+    if (std::any_of(openedTabs.begin(), openedTabs.end(), [fileName](const Tab *tab)
+    {
+        return tab->FilePath == fileName;
+    }))
+        return;
+
+    if (QFile file(fileName); file.open(QFile::ReadOnly))
+    {
+        QJsonDocument jsonDocument = QJsonDocument::fromJson(file.readAll());
+        QJsonObject jsonObject = jsonDocument.object();
+
+        auto *testLadder = new LadderInfo();
+        testLadder->fromJson(jsonObject);
+
+        const QString tabName = QString::fromUtf8(file.filesystemFileName().filename().stem().string());
+        testLadder->Name = tabName;
+        addEditorTab(fileName, tabName, testLadder);
+        recordToRecent(fileName);
+    } else
+    {
+        QMessageBox::critical(this, tr("Error"), file.errorString());
     }
 }
 
@@ -144,6 +166,7 @@ void MainWindow::save(const int index, const bool askNewPath = false)
     file.close();
 
     // Update the file path after writing changes.
+    recordToRecent(newPath);
     targetTab->FilePath = newPath;
     tabWidget->setTabText(index, QString::fromStdString(file.filesystemFileName().filename().stem().string()));
     ui->statusbar->showMessage(tr("File successfully saved"), 3000);
@@ -183,9 +206,11 @@ void MainWindow::showHome()
 {
     auto *homeTab = new WelcomeTab();
     connect(homeTab, SIGNAL(signalNew()), this, SLOT(createNew()));
-    connect(homeTab, SIGNAL(signalOpen()), this, SLOT(openFile()));
+    connect(homeTab, SIGNAL(signalOpen()), this, SLOT(askOpenFile()));
     connect(homeTab, SIGNAL(signalOpenProject()), this, SLOT(openProject()));
     connect(homeTab, SIGNAL(signalHelp()), this, SLOT(help()));
+    connect(homeTab, SIGNAL(signalOpenRequest(QString)), this, SLOT(openFile(QString)));
+    connect(this, SIGNAL(recentUpdated()), homeTab, SLOT(updateRecent()));
 
     addTab(homeTab, QIcon::fromTheme(QIcon::ThemeIcon::GoHome), "Welcome");
 }
@@ -267,7 +292,7 @@ void MainWindow::updateActionState()
 void MainWindow::bindActions() const
 {
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(createNew()));
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(askOpenFile()));
     connect(ui->actionOpenProject, SIGNAL(triggered()), this, SLOT(openProject()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveCurrent()));
     connect(ui->actionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));

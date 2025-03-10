@@ -27,13 +27,13 @@ public:
 
     ~MainWindow() override;
 
-    QSettings Settings = QSettings(Common::DATA_NAME, QSettings::IniFormat);
+    QSettings Settings = QSettings(Common::CONFIG_NAME, QSettings::IniFormat);
 
 private slots:
     void createNew();
     void help();
     void about();
-    void openFile();
+    void askOpenFile();
 
     void save(int index, bool askNewPath);
     void saveCurrent();
@@ -41,10 +41,12 @@ private slots:
     void saveAll();
 
     void openProject();
+
     void showHome();
     void showTranslationGenerator();
 
     void addTab(Tab *tab, const QIcon &icon, const QString &name);
+    void openFile(const QString &fileName);
 
     void closeCurrent();
     void closeOthers();
@@ -56,13 +58,17 @@ private slots:
 private:
     Ui::MainWindow* ui;
     QList<Tab*> openedTabs;
-    QLabel* versionInfo = new QLabel(Common::PROJECT_NAME + " v" + Common::VERSION);;
+    QLabel* versionInfo = new QLabel(Common::PROJECT_NAME + " v" + Common::VERSION);
     QTabWidget* tabWidget = new QTabWidget();
 
     void bindActions() const;
     void bindShortcuts() const;
 
+    void recordToRecent(const QString &fileName);
     void addEditorTab(const QString &path, const QString &name, LadderInfo *ladder);
+
+signals:
+    void recentUpdated();
 };
 
 

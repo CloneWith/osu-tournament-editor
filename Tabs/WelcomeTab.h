@@ -5,6 +5,7 @@
 #ifndef WELCOMETAB_H
 #define WELCOMETAB_H
 
+#include <qlistwidget.h>
 #include <QSettings>
 #include <QWidget>
 
@@ -29,14 +30,18 @@ public:
 
     ~WelcomeTab() override;
 
-    QSettings Settings = QSettings(Common::DATA_NAME, QSettings::IniFormat);
+    QSettings Settings = QSettings(Common::CONFIG_NAME, QSettings::IniFormat);
 
 private slots:
     void callNew();
     void callOpen();
     void callOpenProject();
     void callHelp();
+    void updateRecent();
+    void clearRecent();
     void changeHomeStartupDisplay(bool hideTab);
+
+    void requestOpen(QListWidgetItem *item);
 
 private:
     Ui::WelcomeTab *ui;
@@ -46,6 +51,7 @@ signals:
     void signalOpen();
     void signalOpenProject();
     void signalHelp();
+    void signalOpenRequest(const QString &fileName);
 };
 
 
