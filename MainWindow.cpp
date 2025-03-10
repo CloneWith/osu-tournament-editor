@@ -146,6 +146,7 @@ void MainWindow::save(const int index, const bool askNewPath = false)
     // Update the file path after writing changes.
     targetTab->FilePath = newPath;
     tabWidget->setTabText(index, QString::fromStdString(file.filesystemFileName().filename().stem().string()));
+    ui->statusbar->showMessage(tr("File successfully saved"), 3000);
 }
 
 void MainWindow::saveCurrent()
@@ -201,6 +202,7 @@ void MainWindow::addTab(Tab *tab, const QIcon &icon, const QString &name)
 {
     if (openedTabs.contains(tab))
     {
+        ui->statusbar->showMessage(tr("This configuration has already opened."), 3000);
         qDebug() << "The tab " << tab->FilePath << " was already opened, skipping.";
         return;
     }

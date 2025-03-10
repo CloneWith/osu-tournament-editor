@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>TeamEditorTab</string>
+   <string>Team Editor</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>

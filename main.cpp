@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString& locale : uiLanguages)
     {
-        const QString baseName = "osu-tournament-editor_" + QLocale(locale).name();
+        const QString baseName = Common::DATA_NAME + "_" + QLocale(locale).name();
         if (translator.load(":/i18n/" + baseName))
         {
             QApplication::installTranslator(&translator);

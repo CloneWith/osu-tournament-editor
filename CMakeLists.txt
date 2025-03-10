@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
-set(TS_FILES osu-tournament-editor_zh_CN.ts)
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES zh_CN)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -77,12 +77,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
+    qt_add_translations(osu-tournament-editor)
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET osu-tournament-editor APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creatio
 else()
     if(ANDROID)
         add_library(osu-tournament-editor SHARED
