@@ -4,6 +4,7 @@
 #include "ProjectAboutDialog.h"
 
 #include <QFileDialog>
+#include <QLabel>
 #include <QMessageBox>
 
 #include "TranslationGeneratorWindow.h"
@@ -15,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
       , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->statusbar->addPermanentWidget(versionInfo);
 
     bindActions();
     bindShortcuts();

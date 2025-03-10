@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QFile>
+#include <QLabel>
 #include <QMainWindow>
 #include <QSettings>
 
@@ -55,6 +56,7 @@ private slots:
 private:
     Ui::MainWindow* ui;
     QList<Tab*> openedTabs;
+    QLabel* versionInfo = new QLabel(Common::PROJECT_NAME + " v" + Common::VERSION);;
     QTabWidget* tabWidget = new QTabWidget();
 
     void bindActions() const;
