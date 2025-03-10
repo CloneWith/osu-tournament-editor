@@ -19,6 +19,7 @@ WelcomeTab::WelcomeTab(QWidget *parent) : QWidget(parent), ui(new Ui::WelcomeTab
 
     updateRecent();
     connect(ui->recentListWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(requestOpen(QListWidgetItem*)));
+    connect(ui->clearRecentButton, SIGNAL(clicked()), this, SLOT(clearRecent()));
 
     connect(ui->dismissCheckBox, SIGNAL(toggled(bool)), this, SLOT(changeHomeStartupDisplay(bool)));
 }
@@ -33,12 +34,14 @@ void WelcomeTab::updateRecent()
     const auto recentFiles = Settings.value("recent_files").toStringList();
     ui->recentListWidget->clear();
     ui->recentListWidget->addItems(recentFiles);
+    ui->clearRecentButton->setEnabled(recentFiles.count() > 0);
 }
 
 void WelcomeTab::clearRecent()
 {
     ui->recentListWidget->clear();
     Settings.setValue("recent_files", {});
+    ui->clearRecentButton->setEnabled(false);
 }
 
 void WelcomeTab::changeHomeStartupDisplay(bool hideTab)
