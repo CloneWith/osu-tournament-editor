@@ -17,6 +17,7 @@ ProjectAboutDialog::ProjectAboutDialog(QWidget* parent) :
 {
     ui->setupUi(this);
 
+    setFixedSize(400, 250);
     connect(ui->repoButton, SIGNAL(clicked()), this, SLOT(openRepo()));
 }
 
