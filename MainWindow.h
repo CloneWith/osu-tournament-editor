@@ -31,7 +31,8 @@ public:
 
 private slots:
     void createNew();
-    void help();
+
+    static void help();
     void about();
     void askOpenFile();
 

@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <QLabel>
 #include <QMessageBox>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "TranslationGeneratorWindow.h"
 #include "Models/LadderInfo.h"
@@ -50,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::help()
 {
+    QDesktopServices::openUrl(QUrl(Common::DOCUMENT_LINK));
 }
 
 void MainWindow::about()
@@ -117,8 +120,8 @@ void MainWindow::openFile(const QString &fileName)
 
     if (QFile file(fileName); file.open(QFile::ReadOnly))
     {
-        QJsonDocument jsonDocument = QJsonDocument::fromJson(file.readAll());
-        QJsonObject jsonObject = jsonDocument.object();
+        const QJsonDocument jsonDocument = QJsonDocument::fromJson(file.readAll());
+        const QJsonObject jsonObject = jsonDocument.object();
 
         auto *testLadder = new LadderInfo();
         testLadder->fromJson(jsonObject);
