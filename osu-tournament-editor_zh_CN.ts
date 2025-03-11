@@ -217,58 +217,58 @@
         <translation>主页 (&amp;H)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="63"/>
+        <location filename="MainWindow.cpp" line="66"/>
         <source>New Tournament</source>
         <translation>新比赛</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="68"/>
-        <location filename="MainWindow.cpp" line="195"/>
+        <location filename="MainWindow.cpp" line="71"/>
+        <location filename="MainWindow.cpp" line="223"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="68"/>
+        <location filename="MainWindow.cpp" line="71"/>
         <source>This feature is working in progress.</source>
         <translation>此功能尚在开发中。</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="75"/>
+        <location filename="MainWindow.cpp" line="95"/>
         <source>Select a tournament bracket file</source>
         <translation>选择赛事配置文件</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="78"/>
+        <location filename="MainWindow.cpp" line="98"/>
         <source>Tournament Bracket File (*.json)</source>
         <translation>赛事配置文件 (*.json)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="108"/>
+        <location filename="MainWindow.cpp" line="135"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="125"/>
+        <location filename="MainWindow.cpp" line="150"/>
         <source>Select save location</source>
         <translation>选择保存位置</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="128"/>
+        <location filename="MainWindow.cpp" line="153"/>
         <source>Tournament File (*.json)</source>
         <translation>赛事文件 (*.json)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="149"/>
+        <location filename="MainWindow.cpp" line="175"/>
         <source>File successfully saved</source>
         <translation>文件保存成功</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="196"/>
+        <location filename="MainWindow.cpp" line="224"/>
         <source>This feature is going to be implemented in the future.</source>
         <translation>此功能将在未来实现。</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="205"/>
+        <location filename="MainWindow.cpp" line="233"/>
         <source>This configuration has already opened.</source>
         <translation>此配置文件已被打开。</translation>
     </message>
@@ -277,13 +277,13 @@
     <name>ProjectAboutDialog</name>
     <message>
         <location filename="ProjectAboutDialog.ui" line="23"/>
-        <location filename="cmake-build-debug/osu-tournament-editor_autogen/include/ui_ProjectAboutDialog.h" line="74"/>
+        <location filename="cmake-build-debug/osu-tournament-editor_autogen/include/ui_ProjectAboutDialog.h" line="91"/>
         <source>About This Project</source>
         <translation>关于本项目</translation>
     </message>
     <message>
         <location filename="ProjectAboutDialog.ui" line="47"/>
-        <location filename="cmake-build-debug/osu-tournament-editor_autogen/include/ui_ProjectAboutDialog.h" line="75"/>
+        <location filename="cmake-build-debug/osu-tournament-editor_autogen/include/ui_ProjectAboutDialog.h" line="92"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -308,10 +308,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Cascadia Mono PL&apos;;&quot;&gt;Copyright (C) 2025 CloneWith &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ProjectAboutDialog.ui" line="73"/>
-        <location filename="cmake-build-debug/osu-tournament-editor_autogen/include/ui_ProjectAboutDialog.h" line="87"/>
+        <location filename="ProjectAboutDialog.ui" line="75"/>
+        <location filename="cmake-build-debug/osu-tournament-editor_autogen/include/ui_ProjectAboutDialog.h" line="104"/>
         <source>&amp;Close</source>
         <translation>关闭 (&amp;C)</translation>
+    </message>
+    <message>
+        <location filename="ProjectAboutDialog.ui" line="94"/>
+        <location filename="cmake-build-debug/osu-tournament-editor_autogen/include/ui_ProjectAboutDialog.h" line="105"/>
+        <source>&amp;Source Code on GitHub</source>
+        <translation>在 GitHub 查看源代码 (&amp;S)</translation>
     </message>
 </context>
 <context>

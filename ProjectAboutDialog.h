@@ -27,6 +27,9 @@ public:
 
 private:
     Ui::ProjectAboutDialog* ui;
+
+private slots:
+    static void openRepo();
 };
 
 
