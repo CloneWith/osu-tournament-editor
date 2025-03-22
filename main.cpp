@@ -1,3 +1,4 @@
+#include "main.h"
 #include "MainWindow.h"
 
 #include <QApplication>
@@ -7,6 +8,11 @@
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
+
+    // Set up logging
+    qSetMessagePattern("[%{type}] %{time yyyy-MM-dd hh:mm:ss}%{if-debug}@%{function}:%{line}%{endif}: %{message}");
+    qInstallMessageHandler(logMessageHandler);
+    qDebug() << "Started " + Common::PROJECT_NAME + " " + Common::VERSION;
 
     // I18N initialisation
     QTranslator translator;
@@ -28,3 +34,16 @@ int main(int argc, char* argv[])
 
     return QApplication::exec();
 }
+
+void logMessageHandler(const QtMsgType type, const QMessageLogContext &context, const QString &message)
+{
+    const QString typeStr = qFormatLogMessage(type, context, message);
+    const qint64 currentTime = QDateTime::currentSecsSinceEpoch();
+
+    QFile file("runtime_" + QString::fromStdString(std::to_string(currentTime)) + ".log");
+    file.open(QIODevice::WriteOnly | QIODevice::Append);
+
+    QTextStream textStream(&file);
+    textStream << typeStr << "\n";
+}
+
