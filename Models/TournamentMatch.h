@@ -13,6 +13,7 @@
 #include <qpoint.h>
 #include <qstring.h>
 
+#include "Point.h"
 #include "BeatmapChoice.h"
 #include "TeamColour.h"
 #include "TournamentRound.h"
@@ -48,7 +49,7 @@ class TournamentMatch : public QSerializer
 
     QS_FIELD(QDateTime, Date)
 
-    QS_FIELD(QPoint, Position)
+    QS_OBJECT(Point, Position)
 
     QS_FIELD(TeamColour, Winner)
     QS_FIELD(TeamColour, Loser)

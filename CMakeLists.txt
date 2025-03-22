@@ -70,6 +70,7 @@ set(PROJECT_SOURCES
         Models/TournamentUserModel.cpp
         Models/TournamentUserModel.h
         Models/Tab.h
+        Models/Point.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
